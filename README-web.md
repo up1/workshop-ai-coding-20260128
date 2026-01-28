@@ -105,3 +105,69 @@ flowchart TD
     B --> C[ผู้ใช้ดูรายละเอียดใบเสนอราคา]
     C --> D[Export ใบเสนอราคาเป็น PDF]
 ```
+
+## UI/UX Theme (Koice-Inspired Design)
+
+ปรับปรุง Theme และ Layout ของ Web Application โดยอ้างอิงจาก [Koice Invoice Template](https://harnishdesign.net/demo/html/koice/index-2.html)
+
+### Design Features
+
+| Feature | Description |
+|---------|-------------|
+| **Font** | Poppins (Google Fonts) |
+| **Color Scheme** | Bootstrap Blue Primary (#0d6efd) with gradient headers |
+| **Layout** | Card-based design with subtle shadows |
+| **Navigation** | Fixed navbar with gradient background |
+| **Tables** | Styled headers with gradient, hover effects |
+| **Forms** | Modern inputs with focus states |
+| **Print** | Print-optimized styles (hides navbar/footer) |
+| **Responsive** | Mobile-friendly breakpoints |
+
+### New Files Created
+
+```
+web/
+├── public/
+│   └── css/
+│       └── style.css           # Koice-inspired stylesheet
+└── views/
+    └── partials/
+        ├── header.ejs          # Shared navigation header
+        └── footer.ejs          # Shared footer component
+```
+
+### Updated Views
+
+| File | Changes |
+|------|---------|
+| `views/quotations/index.ejs` | Redesigned list with styled table, empty state, action buttons |
+| `views/quotations/new.ejs` | Enhanced form with sections, gradient total display |
+| `views/quotations/show.ejs` | Invoice-style view with two-column layout, print button |
+
+### CSS Architecture
+
+```css
+/* CSS Custom Properties */
+:root {
+    --primary-color: #0d6efd;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --body-bg: #f5f5f5;
+    /* ... */
+}
+```
+
+### Key UI Components
+
+1. **Navbar** - Gradient header with brand logo และ navigation links
+2. **Page Header** - Title พร้อม action buttons
+3. **Cards** - Container สำหรับ content พร้อม shadow
+4. **Tables** - Gradient header, hover effects, responsive
+5. **Forms** - Styled inputs with focus states
+6. **Invoice View** - Professional layout matching Koice template
+   - Info grid (Volume No., Document No., Date)
+   - Two-column seller/customer boxes
+   - Styled items table with grand total
+   - Thank you footer
+   - Print & Download buttons
+

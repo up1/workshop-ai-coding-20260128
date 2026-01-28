@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Quotation System' %></title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/quotations" class="navbar-brand">
+                <span class="navbar-brand-icon">📋</span>
+                <span>Koice</span>
+            </a>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="/quotations" class="nav-link<%= typeof activePage !== 'undefined' && activePage === 'list' ? ' active' : '' %>">
+                        📄 Quotations
+                    </a>
+                </li>
+                <li>
+                    <a href="/quotations/new" class="nav-link<%= typeof activePage !== 'undefined' && activePage === 'new' ? ' active' : '' %>">
+                        ➕ Create New
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">

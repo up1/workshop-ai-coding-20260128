@@ -1,117 +1,110 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Quotation</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
-        input:focus, textarea:focus { outline: none; border-color: #007bff; }
-        .row { display: flex; gap: 20px; }
-        .row .form-group { flex: 1; }
-        .btn { display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; border: none; cursor: pointer; font-size: 14px; }
-        .btn:hover { background: #0056b3; }
-        .btn-secondary { background: #6c757d; }
-        .btn-secondary:hover { background: #545b62; }
-        .btn-success { background: #28a745; }
-        .btn-success:hover { background: #218838; }
-        .section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
-        h2 { color: #333; margin-bottom: 15px; font-size: 18px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 10px; text-align: left; border: 1px solid #ddd; }
-        th { background: #f8f9fa; }
-        .item-row input { width: 100%; border: none; padding: 5px; }
-        .btn-remove { background: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
-        .actions { margin-top: 20px; display: flex; gap: 10px; }
-        .total-section { margin-top: 20px; text-align: right; font-size: 18px; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>📝 Create New Quotation</h1>
+<%- include('../partials/header', { pageTitle: 'Create Quotation', activePage: 'new' }) %>
 
-        <form id="quotationForm" action="/quotations" method="POST">
-            <div class="row">
-                <div class="form-group">
-                    <label>Volume No.</label>
-                    <input type="text" name="volume_no" placeholder="Volume No.">
-                </div>
-                <div class="form-group">
-                    <label>Document No. *</label>
-                    <input type="text" name="document_no" required placeholder="Document No.">
-                </div>
-                <div class="form-group">
-                    <label>Date *</label>
-                    <input type="date" name="date" required>
-                </div>
+    <div class="invoice-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">
+                <span>📝</span>
+                Create New Quotation
+            </h1>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card">
+            <div class="card-body">
+                <form id="quotationForm" action="/quotations" method="POST">
+                    <!-- Document Info -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Volume No.</label>
+                            <input type="text" name="volume_no" class="form-control" placeholder="Enter volume number">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Document No. <span class="required">*</span></label>
+                            <input type="text" name="document_no" class="form-control" required placeholder="Enter document number">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date <span class="required">*</span></label>
+                            <input type="date" name="date" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <!-- Seller Section -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <span>🏢</span> Seller Information
+                        </h3>
+                        <div class="form-group">
+                            <label class="form-label">Seller Name <span class="required">*</span></label>
+                            <input type="text" name="seller_name" class="form-control" required placeholder="Enter seller/company name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Seller Address</label>
+                            <textarea name="seller_address" class="form-control" rows="2" placeholder="Enter seller address"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Customer Section -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <span>👤</span> Customer Information
+                        </h3>
+                        <div class="form-group">
+                            <label class="form-label">Customer Name <span class="required">*</span></label>
+                            <input type="text" name="customer_name" class="form-control" required placeholder="Enter customer name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Customer Address</label>
+                            <textarea name="customer_address" class="form-control" rows="2" placeholder="Enter customer address"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Items Section -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <span>📦</span> Items
+                        </h3>
+                        <div class="items-table-wrapper">
+                            <table class="items-table" id="itemsTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px">No.</th>
+                                        <th>Description</th>
+                                        <th style="width: 80px">Qty</th>
+                                        <th style="width: 80px">Unit</th>
+                                        <th style="width: 110px">Price/Unit</th>
+                                        <th style="width: 110px">Total</th>
+                                        <th style="width: 50px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="itemsBody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-success mt-3" onclick="addItem()">➕ Add Item</button>
+
+                        <div class="grand-total-display">
+                            <div class="label">Grand Total</div>
+                            <div class="amount"><span id="grandTotal">0.00</span> ฿</div>
+                        </div>
+                    </div>
+
+                    <!-- Amount in Words -->
+                    <div class="form-group mt-4">
+                        <label class="form-label">Amount in Words</label>
+                        <input type="text" name="amount_in_words" class="form-control" placeholder="Enter amount in words (e.g., One Thousand Baht)">
+                    </div>
+
+                    <input type="hidden" name="items" id="itemsInput">
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-lg">💾 Save Quotation</button>
+                        <a href="/quotations" class="btn btn-secondary btn-lg">Cancel</a>
+                    </div>
+                </form>
             </div>
-
-            <div class="section">
-                <h2>Seller Information</h2>
-                <div class="form-group">
-                    <label>Seller Name *</label>
-                    <input type="text" name="seller_name" required placeholder="Seller Name">
-                </div>
-                <div class="form-group">
-                    <label>Seller Address</label>
-                    <textarea name="seller_address" rows="2" placeholder="Seller Address"></textarea>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>Customer Information</h2>
-                <div class="form-group">
-                    <label>Customer Name *</label>
-                    <input type="text" name="customer_name" required placeholder="Customer Name">
-                </div>
-                <div class="form-group">
-                    <label>Customer Address</label>
-                    <textarea name="customer_address" rows="2" placeholder="Customer Address"></textarea>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>Items</h2>
-                <table id="itemsTable">
-                    <thead>
-                        <tr>
-                            <th style="width: 50px">No.</th>
-                            <th>Description</th>
-                            <th style="width: 80px">Qty</th>
-                            <th style="width: 80px">Unit</th>
-                            <th style="width: 100px">Price/Unit</th>
-                            <th style="width: 100px">Total</th>
-                            <th style="width: 50px"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="itemsBody">
-                    </tbody>
-                </table>
-                <button type="button" class="btn btn-success" onclick="addItem()" style="margin-top: 10px">+ Add Item</button>
-
-                <div class="total-section">
-                    Grand Total: <span id="grandTotal">0.00</span> ฿
-                </div>
-            </div>
-
-            <div class="form-group" style="margin-top: 20px">
-                <label>Amount in Words</label>
-                <input type="text" name="amount_in_words" placeholder="Amount in words">
-            </div>
-
-            <input type="hidden" name="items" id="itemsInput">
-
-            <div class="actions">
-                <button type="submit" class="btn">Save Quotation</button>
-                <a href="/quotations" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
+        </div>
     </div>
 
     <script>
@@ -193,5 +186,5 @@
 
         document.querySelector('input[name="date"]').valueAsDate = new Date();
     </script>
-</body>
-</html>
+
+<%- include('../partials/footer') %>
