@@ -1,16 +1,24 @@
 {
   "name": "web",
   "version": "1.0.0",
-  "description": "",
+  "description": "Quotation Management System",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "express": "^5.2.1"
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "pdfkit": "^0.15.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8"
   }
 }
